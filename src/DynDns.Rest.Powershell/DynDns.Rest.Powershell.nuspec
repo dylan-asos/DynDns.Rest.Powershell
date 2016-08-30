@@ -20,9 +20,9 @@
     <iconUrl>https://nugetimages.blob.core.windows.net/icons/DynDns-64x64.png</iconUrl>
   </metadata>
   <files>
-    <file src="DynDns.Rest.Powershell.dll" target="lib\net40\DynDns.Rest.Powershell.dll" />
-    <file src="DynDns.Rest.Powershell.pdb" target="lib\net40\DynDns.Rest.Powershell.pdb" />
-    <file src="DynDns.Rest.Powershell.xml" target="lib\Net40\DynDns.Rest.Powershell.xml" />
+    <file src="bin\$configuration$\DynDns.Rest.Powershell.dll" target="lib\net40\" />
+    <file src="bin\$configuration$\DynDns.Rest.Powershell.pdb" target="lib\net40\" />
+    <file src="bin\$configuration$\DynDns.Rest.Powershell.xml" target="lib\Net40\" />
   </files>
 </package>
 
