@@ -1,0 +1,28 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <version>0.0.0.0</version>
+    <authors>Dylan Morley</authors>
+    <owners>Dylan Morley</owners>
+    <id>DynDns.Rest.Powershell</id>
+    <title>DynDns.Rest.Powershell</title>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      Unofficial powershell wrapper around the DynDns Restful API 
+    </description>
+    <copyright>Copyright ©  2016</copyright>
+    <dependencies>
+      <group>
+        <dependency id="System.Management.Automation" version="6.1.7601.17515" />
+        <dependency id="Newtonsoft.Json" version="9.0.1" />
+      </group>
+    </dependencies>
+    <iconUrl>https://nugetimages.blob.core.windows.net/icons/DynDns-64x64.png</iconUrl>
+  </metadata>
+  <files>
+    <file src="DynDns.Rest.Powershell.dll" target="lib\net40\DynDns.Rest.Powershell.dll" />
+    <file src="DynDns.Rest.Powershell.pdb" target="lib\net40\DynDns.Rest.Powershell.pdb" />
+    <file src="DynDns.Rest.Powershell.xml" target="lib\Net40\DynDns.Rest.Powershell.xml" />
+  </files>
+</package>
+
