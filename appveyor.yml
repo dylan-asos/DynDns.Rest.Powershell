@@ -1,0 +1,11 @@
+version: 1.0.{build}
+before_build:
+- cmd: nuget restore src\DynDns.Rest.Powershell.sln
+build:
+  project: src\DynDns.Rest.Powershell.sln
+  publish_nuget: true
+  publish_nuget_symbols: true
+  include_nuget_references: true
+  verbosity: minimal
+artifacts:
+- path: DynDns.Rest.Powershell.1.0.0.0.nupkg
