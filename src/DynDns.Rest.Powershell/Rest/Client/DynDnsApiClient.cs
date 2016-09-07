@@ -5,6 +5,7 @@
     using System.Net.Http;
     using System.Net.Http.Headers;
 
+    using DynDns.Rest.Powershell.Response;
     using DynDns.Rest.Powershell.Response.ResponseData;
 
     using Newtonsoft.Json;
@@ -13,18 +14,23 @@
     {
         private readonly HttpClient client;
 
+        private readonly JsonSerializerSettings jsonSerializerSettings;
+
         private const string ApplicationJson = "application/json";
 
         public DynDnsApiClient(string baseUrl)
         {
             client = new HttpClient(new DynApiDelegatingHandler()) { BaseAddress = new Uri(baseUrl) };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(ApplicationJson));
+
+            jsonSerializerSettings = new JsonSerializerSettings { MissingMemberHandling = MissingMemberHandling.Ignore, NullValueHandling = NullValueHandling.Ignore };
+
             ServicePointManager.Expect100Continue = false;
         }
 
         internal static SessionData DynDnsSession { get; set; }
 
-        public T Send<T>(HttpRequestMessage request)
+        public DynDnsApiCallResponse Send(HttpRequestMessage request)
         {
             var httpResponseMessage = client.SendAsync(request).Result;
 
@@ -35,12 +41,10 @@
                 responseText = httpResponseMessage.Content.ReadAsStringAsync().Result;
             }
 
-            if (httpResponseMessage.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<T>(responseText);
-            }
+            var response = JsonConvert.DeserializeObject<DynDnsApiCallResponse>(responseText, jsonSerializerSettings);
+            response.StatusCode = httpResponseMessage.StatusCode;
 
-            throw new DynDnsApiException(responseText);
+            return response;
         }
     }
 }

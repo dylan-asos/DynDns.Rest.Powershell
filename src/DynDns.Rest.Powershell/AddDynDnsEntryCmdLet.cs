@@ -28,7 +28,7 @@
         [Alias("ttl")]
         public string TimeToLive { get; set; }
 
-        protected override DynDnsApiCallResponse<DnsCreationData> CallDynDnsApi()
+        protected override DynDnsApiCallResponse CallDynDnsApi()
         {
             if (ApiClient.DoesEntryAlreadyExist(Node, Zone))
             {

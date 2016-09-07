@@ -1,13 +1,15 @@
 ﻿namespace DynDns.Rest.Powershell.Rest
 {
-    using System.Collections.Generic;
-    using System.Linq;
+    using System.Dynamic;
+    using System.Net;
     using System.Net.Http;
 
     using DynDns.Rest.Powershell.Request;
     using DynDns.Rest.Powershell.Response;
     using DynDns.Rest.Powershell.Response.ResponseData;
     using DynDns.Rest.Powershell.Rest.Client;
+
+    using Newtonsoft.Json.Linq;
 
     public class DynDnsApi
     {
@@ -27,7 +29,7 @@
         }
 
 
-        public DynDnsApiCallResponse<SessionData> Login(string userName, string password, string customerName)
+        public DynDnsApiCallResponse Login(string userName, string password, string customerName)
         {
             var sessionRequest = new SessionRequest { CustomerName = customerName, UserName = userName, Password = password };
 
@@ -35,21 +37,21 @@
 
             request.Content = sessionRequest.ToStringContent();
 
-            var response = ExecuteDynDnsRequest<DynDnsApiCallResponse<SessionData>>(request);
+            var response = ExecuteDynDnsRequest(request);
 
             if (response.Success)
             {
-                DynDnsApiClient.DynDnsSession = response.Data;
+                DynDnsApiClient.DynDnsSession = (response.Data as JObject).ToObject<SessionData>();
             }
 
             return response;
         }
 
-        public DynDnsApiCallResponse<LogoutData> Logout()
+        public DynDnsApiCallResponse Logout()
         {
             var request = DynRequestMessage(HttpMethod.Delete, "REST/Session/");
 
-            var response = ExecuteDynDnsRequest<DynDnsApiCallResponse<LogoutData>>(request);
+            var response = ExecuteDynDnsRequest(request);
 
             if (response.Success)
             {
@@ -59,36 +61,36 @@
             return response;
         }
 
-        public DynDnsApiCallResponse<DnsCreationData> CreateCName(string node, string zone, string data)
+        public DynDnsApiCallResponse CreateCName(string node, string zone, string data)
         {
             string fqdn = string.Concat(node, ".", zone);
 
             var request = DynRequestMessage(HttpMethod.Post, string.Format("REST/CNAMERecord/{0}/{1}/", zone, fqdn));
 
-            request.Content = new CreateDnsEntryRequest(new { cname = fqdn }).ToStringContent();
+            request.Content = new CreateDnsEntryRequest(new { cname = data }).ToStringContent();
 
-            return ExecuteDynDnsRequest<DynDnsApiCallResponse<DnsCreationData>>(request);
+            return ExecuteDynDnsRequest(request);
         }
 
-        public DynDnsApiCallResponse<DnsCreationData> CreateARecord(string node, string zone, string data)
+        public DynDnsApiCallResponse CreateARecord(string node, string zone, string data)
         {
             string fqdn = string.Concat(node, ".", zone);
 
             var request = DynRequestMessage(HttpMethod.Post, string.Format("REST/ARecord/{0}/{1}/", zone, fqdn));
 
-            request.Content = new CreateDnsEntryRequest(new { address = fqdn }).ToStringContent();
+            request.Content = new CreateDnsEntryRequest(new { address = data }).ToStringContent();
 
-            return ExecuteDynDnsRequest<DynDnsApiCallResponse<DnsCreationData>>(request);
+            return ExecuteDynDnsRequest(request);
         }
 
         public bool DoesEntryAlreadyExist(string node, string zone)
         {
             var response = GetDnsEntry(node, zone);
 
-            return response.Data.Any();
+            return response.StatusCode != HttpStatusCode.NotFound;
         }
 
-        public DynDnsApiCallResponse<PublishZoneData> PublishZone(string zone)
+        public DynDnsApiCallResponse PublishZone(string zone)
         {
             var request = DynRequestMessage(HttpMethod.Put, string.Format("REST/Zone/{0}/", zone));
 
@@ -96,14 +98,14 @@
 
             request.Content = ObjectExtensions.ToJsonContent(publishZoneRequest);
 
-            return ExecuteDynDnsRequest<DynDnsApiCallResponse<PublishZoneData>>(request);
+            return ExecuteDynDnsRequest(request);
         }
 
-        public DynDnsApiCallResponse<List<ZoneChangesData>> GetZoneChanges(string zone)
+        public DynDnsApiCallResponse GetZoneChanges(string zone)
         {
             var request = DynRequestMessage(HttpMethod.Get, string.Format("REST/ZoneChanges/{0}/", zone));
 
-            return ExecuteDynDnsRequest<DynDnsApiCallResponse<List<ZoneChangesData>>>(request);
+            return ExecuteDynDnsRequest(request);
         }
 
         private HttpRequestMessage DynRequestMessage(HttpMethod method, string resource)
@@ -113,20 +115,18 @@
             return request;
         }
 
-        private T ExecuteDynDnsRequest<T>(HttpRequestMessage request) 
+        private DynDnsApiCallResponse ExecuteDynDnsRequest(HttpRequestMessage request) 
         {
-            var response = client.Send<T>(request);
-
-            return response;
+            return client.Send(request);
         }
 
-        public DynDnsApiCallResponse<List<string>>  GetDnsEntry(string node, string zone)
+        public DynDnsApiCallResponse GetDnsEntry(string node, string zone)
         {
             string fqdn = string.Concat(node, ".", zone);
 
             var request = DynRequestMessage(HttpMethod.Get, string.Format("REST/ANYRecord/{0}/{1}/", zone, fqdn));
 
-            return ExecuteDynDnsRequest<DynDnsApiCallResponse<List<string>>>(request);            
+            return ExecuteDynDnsRequest(request);            
         }
     }
 }

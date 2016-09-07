@@ -8,7 +8,7 @@
     [Cmdlet(VerbsCommon.Close, "DynDnsSession")]
     public class CloseDynDnsSessionCmdLet : DynDnsPsCmdLet<LogoutData>
     {
-        protected override DynDnsApiCallResponse<LogoutData> CallDynDnsApi()
+        protected override DynDnsApiCallResponse CallDynDnsApi()
         {
             return ApiClient.Logout();
         }

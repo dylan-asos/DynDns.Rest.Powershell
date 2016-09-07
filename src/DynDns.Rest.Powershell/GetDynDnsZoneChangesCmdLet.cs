@@ -12,7 +12,7 @@ namespace DynDns.Rest.Powershell
         [Parameter(Mandatory = true, HelpMessage = "The zone changes to publish")]
         public string Zone { get; set; }
 
-        protected override DynDnsApiCallResponse<List<ZoneChangesData>> CallDynDnsApi()
+        protected override DynDnsApiCallResponse CallDynDnsApi()
         {
             return ApiClient.GetZoneChanges(Zone);
         }

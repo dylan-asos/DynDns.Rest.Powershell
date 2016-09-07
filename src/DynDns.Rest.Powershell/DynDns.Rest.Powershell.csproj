@@ -56,7 +56,6 @@
   <ItemGroup>
     <Compile Include="CloseDynDnsSessionCmdLet.cs" />
     <Compile Include="ConfirmationDetails.cs" />
-    <Compile Include="DynDnsApiExceptioncs.cs" />
     <Compile Include="DynDnsPsCmdLet.cs" />
     <Compile Include="GetDynDnsEntryCmdLet.cs" />
     <Compile Include="GetDynDnsZoneChangesCmdLet.cs" />

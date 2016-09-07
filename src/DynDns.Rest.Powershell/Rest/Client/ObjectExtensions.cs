@@ -1,5 +1,6 @@
 ﻿namespace DynDns.Rest.Powershell.Rest.Client
 {
+    using System.Net;
     using System.Net.Http;
     using System.Text;
 

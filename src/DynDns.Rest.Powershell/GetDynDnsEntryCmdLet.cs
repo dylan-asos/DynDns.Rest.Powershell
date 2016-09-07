@@ -14,7 +14,7 @@ namespace DynDns.Rest.Powershell
         [Parameter(Mandatory = true, HelpMessage = "The zone of the entry")]
         public string Zone { get; set; }
 
-        protected override DynDnsApiCallResponse<List<string>> CallDynDnsApi()
+        protected override DynDnsApiCallResponse CallDynDnsApi()
         {
             return ApiClient.GetDnsEntry(Node, Zone);
         }

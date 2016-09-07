@@ -7,6 +7,9 @@
     using DynDns.Rest.Powershell.Response;
     using DynDns.Rest.Powershell.Rest;
 
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+
     /// <summary>
     /// Defines the base functionality for interacting with the DynDns REST API. Access to the API client, 
     /// </summary>
@@ -58,9 +61,9 @@
             }
         }
 
-        protected virtual DynDnsApiCallResponse<T> CallDynDnsApi()
+        protected virtual DynDnsApiCallResponse CallDynDnsApi()
         {
-            return new DynDnsApiCallResponse<T>();
+            return null;
         }
 
         protected override void ProcessRecord()
@@ -102,7 +105,7 @@
             return Force || ShouldContinue(ConfirmationDetails.Query, ConfirmationDetails.Caption);
         }
 
-        protected virtual void WriteDynDnsResponse(DynDnsApiCallResponse<T> response)
+        protected virtual void WriteDynDnsResponse(DynDnsApiCallResponse response)
         {
             if (response == null)
             {
@@ -111,7 +114,18 @@
 
             if (response.Success)
             {
-                WriteObject(response.Data);
+                var output = response.Data as JObject;
+
+                if (output != null)
+                {
+                    WriteObject(output.ToString(Formatting.Indented));
+                }
+
+                var arrayData = response.Data as JArray;
+                if (arrayData != null)
+                {
+                    WriteObject(arrayData.ToString(Formatting.Indented));
+                }
             }
             else
             {

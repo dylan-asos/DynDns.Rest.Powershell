@@ -19,7 +19,7 @@ namespace DynDns.Rest.Powershell
             }
         }
 
-        protected override DynDnsApiCallResponse<PublishZoneData> CallDynDnsApi()
+        protected override DynDnsApiCallResponse CallDynDnsApi()
         {
             return ApiClient.PublishZone(Zone);
         }

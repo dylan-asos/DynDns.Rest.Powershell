@@ -28,7 +28,7 @@
             }
         }
 
-        protected override DynDnsApiCallResponse<SessionData> CallDynDnsApi()
+        protected override DynDnsApiCallResponse CallDynDnsApi()
         {
             return ApiClient.Login(UserName, Password, CustomerName);
         }
