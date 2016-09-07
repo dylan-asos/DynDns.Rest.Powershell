@@ -71,7 +71,17 @@ Push-DynDnsZoneChanges -zone some-zone.com
 
 Ends your session. If any changes were made that weren't commited using Push-DynDnsZoneChanges , they are abandoned and no updates are made
 
+## Example Session
 
+Tying it together, the following shows the commands required to logon, create a new CName, push changes to the zone and log off
 
+```powershell
+Get-NewDynDnsSession -user dyndnsuser -pwd the-password -customer customer-name
 
+Add-DynDnsEntry -zone some-zone.com -node node-to-create -rt CName -rd some.origin.net
+
+Push-DynDnsZoneChanges -zone some-zone.com
+
+Close-DynDnsSession
+```
 
