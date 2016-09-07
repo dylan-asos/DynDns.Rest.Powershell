@@ -10,7 +10,7 @@ namespace DynDns.Rest.Powershell.Rest.Client
     public class DynApiDelegatingHandler : DelegatingHandler
     {
         private const string ContentType = "Content-Type";
-     
+
         public DynApiDelegatingHandler()
             : this(new HttpClientHandler())
         {
@@ -27,28 +27,26 @@ namespace DynDns.Rest.Powershell.Rest.Client
             {
                 request.Headers.Add("Auth-Token", DynDnsApiClient.DynDnsSession.Token);
             }
-          
+
             SetContentTypeHeaderForAllRequests(request);
-            
+
             return await base.SendAsync(request, cancellationToken);
         }
 
         /// <summary>
-        /// Total hack to get around every resource request to Dyn Dns requring a Content-Type
-        /// header - HttpClient requests by default don't allow setting the Conetent-Type on
-        /// GET and DELETE requests.
+        ///     Total hack to get around every resource request to Dyn Dns requring a Content-Type
+        ///     header - HttpClient requests by default don't allow setting the Conetent-Type on
+        ///     GET and DELETE requests.
         /// </summary>
         /// <param name="request"></param>
         private void SetContentTypeHeaderForAllRequests(HttpRequestMessage request)
         {
-            var invalidHeaders = (HashSet<string>)typeof(HttpHeaders)
-                .GetField("invalidHeaders", BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetValue(request.Headers);
-            
+            var invalidHeaders = (HashSet<string>)typeof(HttpHeaders).GetField("invalidHeaders", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(request.Headers);
+
             invalidHeaders.Remove(ContentType);
             request.Headers.Remove(ContentType);
 
-            request.Headers.Add(ContentType, "application/json");            
+            request.Headers.Add(ContentType, "application/json");
         }
     }
 }

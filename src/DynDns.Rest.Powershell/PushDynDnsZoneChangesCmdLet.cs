@@ -3,10 +3,9 @@ namespace DynDns.Rest.Powershell
     using System.Management.Automation;
 
     using DynDns.Rest.Powershell.Response;
-    using DynDns.Rest.Powershell.Response.ResponseData;
 
     [Cmdlet(VerbsCommon.Push, "DynDnsZoneChanges", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.Medium)]
-    public class PushDynDnsZoneChangesCmdLet : DynDnsPsCmdLet<PublishZoneData>
+    public class PushDynDnsZoneChangesCmdLet : DynDnsPsCmdLet
     {
         [Parameter(Mandatory = true, HelpMessage = "The zone changes to publish")]
         public string Zone { get; set; }
@@ -15,7 +14,7 @@ namespace DynDns.Rest.Powershell
         {
             get
             {
-                return new ConfirmationDetails() { Caption = string.Format("Push zone changes to {0}", Zone), Query = "Are you sure you want to publish the zone changes?", Target = Zone };
+                return new ConfirmationDetails { Caption = string.Format("Push zone changes to {0}", Zone), Query = "Are you sure you want to publish the zone changes?", Target = Zone };
             }
         }
 
@@ -23,6 +22,5 @@ namespace DynDns.Rest.Powershell
         {
             return ApiClient.PublishZone(Zone);
         }
-
     }
 }

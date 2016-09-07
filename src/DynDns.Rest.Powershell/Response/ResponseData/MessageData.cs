@@ -2,7 +2,7 @@
 {
     using Newtonsoft.Json;
 
-    public class MessageData 
+    public class MessageData
     {
         [JsonProperty("ERR_CD")]
         public string ErrorCode { get; set; }

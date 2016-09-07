@@ -2,7 +2,7 @@
 {
     using Newtonsoft.Json;
 
-    public class PublishZoneData 
+    public class PublishZoneData
     {
         [JsonProperty("serial")]
         public int Serial { get; set; }

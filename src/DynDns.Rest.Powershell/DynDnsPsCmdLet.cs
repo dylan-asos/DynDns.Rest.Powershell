@@ -11,11 +11,10 @@
     using Newtonsoft.Json.Linq;
 
     /// <summary>
-    /// Defines the base functionality for interacting with the DynDns REST API. Access to the API client, 
+    ///     Defines the base functionality for interacting with the DynDns REST API. Access to the API client,
     /// </summary>
-    /// <typeparam name="T">The data type returned by the call to the DynDns API.
     /// </typeparam>
-    public class DynDnsPsCmdLet<T> : PSCmdlet
+    public class DynDnsPsCmdLet : PSCmdlet
     {
         protected DynDnsApi ApiClient;
 
@@ -40,7 +39,8 @@
         }
 
         /// <summary>
-        /// A <see cref="ConfirmationDetails"/> instance to use in any confirmation dialogues to display during a powershell operation 
+        ///     A <see cref="ConfirmationDetails" /> instance to use in any confirmation dialogues to display during a powershell
+        ///     operation
         /// </summary>
         protected virtual ConfirmationDetails ConfirmationDetails
         {
@@ -51,7 +51,7 @@
         }
 
         /// <summary>
-        /// True if the client is required to have signed in to DynDns before performing an operation, otherwise False.
+        ///     True if the client is required to have signed in to DynDns before performing an operation, otherwise False.
         /// </summary>
         protected virtual bool AuthenticationRequired
         {

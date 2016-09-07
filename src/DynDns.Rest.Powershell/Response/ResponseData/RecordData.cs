@@ -2,7 +2,7 @@
 {
     using Newtonsoft.Json;
 
-    public class DnsRecordData 
+    public class DnsRecordData
     {
         [JsonProperty("fqdn")]
         public string FullyQualifiedDomainName { get; set; }

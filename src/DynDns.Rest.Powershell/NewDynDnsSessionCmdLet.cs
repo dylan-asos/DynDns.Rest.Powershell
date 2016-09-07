@@ -3,10 +3,9 @@
     using System.Management.Automation;
 
     using DynDns.Rest.Powershell.Response;
-    using DynDns.Rest.Powershell.Response.ResponseData;
 
     [Cmdlet(VerbsCommon.Get, "NewDynDnsSession")]
-    public class NewDynDnsSessionCmdLet : DynDnsPsCmdLet<SessionData>
+    public class NewDynDnsSessionCmdLet : DynDnsPsCmdLet
     {
         [Parameter(Mandatory = true, HelpMessage = "The user name to connect as")]
         [Alias("user")]

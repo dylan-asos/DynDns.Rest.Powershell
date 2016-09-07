@@ -1,6 +1,5 @@
 ﻿namespace DynDns.Rest.Powershell.Rest
 {
-    using System.Dynamic;
     using System.Net;
     using System.Net.Http;
 
@@ -27,7 +26,6 @@
                 return DynDnsApiClient.DynDnsSession != null;
             }
         }
-
 
         public DynDnsApiCallResponse Login(string userName, string password, string customerName)
         {
@@ -115,7 +113,7 @@
             return request;
         }
 
-        private DynDnsApiCallResponse ExecuteDynDnsRequest(HttpRequestMessage request) 
+        private DynDnsApiCallResponse ExecuteDynDnsRequest(HttpRequestMessage request)
         {
             return client.Send(request);
         }
@@ -126,7 +124,7 @@
 
             var request = DynRequestMessage(HttpMethod.Get, string.Format("REST/ANYRecord/{0}/{1}/", zone, fqdn));
 
-            return ExecuteDynDnsRequest(request);            
+            return ExecuteDynDnsRequest(request);
         }
     }
 }

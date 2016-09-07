@@ -1,6 +1,6 @@
 ﻿namespace DynDns.Rest.Powershell.Response.ResponseData
 {
-    public class LogoutData 
+    public class LogoutData
     {
         public override string ToString()
         {

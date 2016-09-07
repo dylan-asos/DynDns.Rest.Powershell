@@ -11,11 +11,6 @@
 
     public class DynDnsApiCallResponse
     {
-
-        public DynDnsApiCallResponse()
-        {
-        }
-
         [JsonProperty("job_id")]
         public decimal JobId { get; set; }
 
@@ -29,7 +24,6 @@
         public dynamic Data { get; set; }
 
         public HttpStatusCode StatusCode { get; set; }
-
 
         public bool Success
         {

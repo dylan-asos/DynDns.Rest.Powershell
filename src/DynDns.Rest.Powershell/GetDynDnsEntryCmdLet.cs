@@ -1,12 +1,11 @@
 namespace DynDns.Rest.Powershell
 {
-    using System.Collections.Generic;
     using System.Management.Automation;
 
     using DynDns.Rest.Powershell.Response;
 
     [Cmdlet(VerbsCommon.Get, "DynDnsEntry")]
-    public class GetDynDnsEntryCmdLet : DynDnsPsCmdLet<List<string>>
+    public class GetDynDnsEntryCmdLet : DynDnsPsCmdLet
     {
         [Parameter(Mandatory = true, HelpMessage = "The entry node")]
         public string Node { get; set; }

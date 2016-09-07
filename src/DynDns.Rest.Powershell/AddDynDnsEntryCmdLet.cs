@@ -5,10 +5,9 @@
 
     using DynDns.Rest.Powershell.Request;
     using DynDns.Rest.Powershell.Response;
-    using DynDns.Rest.Powershell.Response.ResponseData;
 
     [Cmdlet(VerbsCommon.Add, "DynDnsEntry")]
-    public class AddDynDnsEntryCmdLet : DynDnsPsCmdLet<DnsCreationData>
+    public class AddDynDnsEntryCmdLet : DynDnsPsCmdLet
     {
         [Parameter(Mandatory = true, HelpMessage = "The zone for the DNS entry")]
         public string Zone { get; set; }

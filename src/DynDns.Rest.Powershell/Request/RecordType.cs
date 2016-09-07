@@ -2,7 +2,8 @@
 {
     public enum RecordType
     {
-        CName, 
+        CName,
+
         ARecord
     }
 }

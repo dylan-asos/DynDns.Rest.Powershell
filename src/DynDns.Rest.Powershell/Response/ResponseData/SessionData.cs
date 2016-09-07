@@ -1,6 +1,6 @@
 ﻿namespace DynDns.Rest.Powershell.Response.ResponseData
 {
-    public class SessionData 
+    public class SessionData
     {
         public string Token { get; set; }
 

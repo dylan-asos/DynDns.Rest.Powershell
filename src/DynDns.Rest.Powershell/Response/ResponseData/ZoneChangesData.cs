@@ -2,7 +2,7 @@ namespace DynDns.Rest.Powershell.Response.ResponseData
 {
     using Newtonsoft.Json;
 
-    public class ZoneChangesData 
+    public class ZoneChangesData
     {
         [JsonProperty("fqdn")]
         public string FullyQualifiedDomainName { get; set; }
