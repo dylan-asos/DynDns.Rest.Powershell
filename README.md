@@ -1,3 +1,5 @@
+Dev build: [![Build status](https://ci.appveyor.com/api/projects/status/qon08wyyd0m9y9dm?svg=true)](https://ci.appveyor.com/project/dylan-asos/dyndns-rest-powershell)
+
 # DynDns.Rest.Powershell
 Unofficial powershell wrapper around the DynDns Rest API -  A .NET Powershell library for working with the DynDns Rest API - https://help.dyn.com/rest/
 
