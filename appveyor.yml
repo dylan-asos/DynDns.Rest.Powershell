@@ -1,11 +1,36 @@
-version: 1.0.{build}
+version: 1.0.0.{build}
+
+branches:
+  only:
+    - master
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"    
+
+configuration: Release  
+
 before_build:
 - cmd: nuget restore src\DynDns.Rest.Powershell.sln
+
 build:
   project: src\DynDns.Rest.Powershell.sln
   publish_nuget: true
   publish_nuget_symbols: true
   include_nuget_references: true
   verbosity: minimal
+
 artifacts:
-- path: DynDns.Rest.Powershell.1.0.0.0.nupkg
+  - path: '**\*.nupkg'
+
+
+deploy:
+  provider: NuGet
+  symbol_server: https://www.myget.org/F/dylan-asos/api/v2/package
+  api_key:
+    secure: gsoFWII37JjFoI82U/pXU+5H9Kdu4Ozq+IN5fSntyoz6xeq2rWlpFig6SXSLLsG2
+  artifact: /.*\.nupkg/
+  
