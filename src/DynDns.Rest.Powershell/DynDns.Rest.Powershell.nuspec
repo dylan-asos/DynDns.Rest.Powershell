@@ -23,6 +23,8 @@
     <file src="bin\$configuration$\DynDns.Rest.Powershell.dll" target="lib\net40\" />
     <file src="bin\$configuration$\DynDns.Rest.Powershell.pdb" target="lib\net40\" />
     <file src="bin\$configuration$\DynDns.Rest.Powershell.xml" target="lib\Net40\" />
+    <file src="bin\$configuration$\Newtonsoft.Json.dll" target="lib\net40\" />
+    <file src="bin\$configuration$\System.Management.Automation.dll" target="lib\net40\" />
   </files>
 </package>
 
