@@ -53,6 +53,9 @@ This would create A Record *the-node-to-create.somezone.com* over *1.2.3.4*
 Add-DynDnsEntry -zone somezone.com -node the-node-to-create -rt ARecord -rd 1.2.3.4
 ```
 
+In both cases, if the node you are trying to create already exists for the zone, then a conflict error is displayed and no work is done.
+
+
 ### Get-DynDnsZoneChanges
 
 Any outstanding changes waiting to be published are displayed
@@ -63,7 +66,7 @@ Get-DynDnsZoneChanges -zone some-zone.com
 
 ### Push-DynDnsZoneChanges
 
-Requires confirmation. Any outstanding changes to be published are updated in the zone
+Requires confirmation, can be overridden by using the -Force parameter. Any outstanding changes to be published are updated in the zone
 
 ```powershell
 Push-DynDnsZoneChanges -zone some-zone.com
