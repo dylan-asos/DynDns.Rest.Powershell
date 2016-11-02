@@ -1,5 +1,8 @@
 ﻿namespace DynDns.Rest.Powershell.Rest
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
 
@@ -61,7 +64,7 @@
 
         public DynDnsApiCallResponse CreateCName(string node, string zone, string data)
         {
-            string fqdn = string.Concat(node, ".", zone);
+            var fqdn = GetFullyQualifiedEntry(node, zone);
 
             var request = DynRequestMessage(HttpMethod.Post, string.Format("REST/CNAMERecord/{0}/{1}/", zone, fqdn));
 
@@ -72,7 +75,7 @@
 
         public DynDnsApiCallResponse CreateARecord(string node, string zone, string data)
         {
-            string fqdn = string.Concat(node, ".", zone);
+            var fqdn = GetFullyQualifiedEntry(node, zone);
 
             var request = DynRequestMessage(HttpMethod.Post, string.Format("REST/ARecord/{0}/{1}/", zone, fqdn));
 
@@ -120,9 +123,31 @@
 
         public DynDnsApiCallResponse GetDnsEntry(string node, string zone)
         {
-            string fqdn = string.Concat(node, ".", zone);
+            var fqdn = GetFullyQualifiedEntry(node, zone);
 
             var request = DynRequestMessage(HttpMethod.Get, string.Format("REST/ANYRecord/{0}/{1}/", zone, fqdn));
+
+            return ExecuteDynDnsRequest(request);
+        }
+
+        private static string GetFullyQualifiedEntry(string node, string zone)
+        {
+            return string.Concat(node, ".", zone);
+        }
+
+        public DynDnsApiCallResponse RemoveDnsEntry(string node, string zone)
+        {
+            var getEntryResponse = GetDnsEntry(node, zone);
+
+            if (getEntryResponse.StatusCode == HttpStatusCode.NotFound)
+            {
+                return getEntryResponse;
+            }
+
+            var entry = getEntryResponse.Data as JArray;
+            var recordToDelete = entry.Values().FirstOrDefault().ToObject<string>();
+
+            var request = DynRequestMessage(HttpMethod.Delete, recordToDelete);
 
             return ExecuteDynDnsRequest(request);
         }

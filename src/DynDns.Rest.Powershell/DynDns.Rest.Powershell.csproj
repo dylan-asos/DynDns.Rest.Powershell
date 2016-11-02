@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RemoveDynDnsEntryCmdLet.cs" />
     <Compile Include="CloseDynDnsSessionCmdLet.cs" />
     <Compile Include="ConfirmationDetails.cs" />
     <Compile Include="DynDnsPsCmdLet.cs" />
