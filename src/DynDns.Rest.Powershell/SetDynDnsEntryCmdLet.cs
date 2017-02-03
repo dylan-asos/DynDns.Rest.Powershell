@@ -6,8 +6,8 @@
     using DynDns.Rest.Powershell.Request;
     using DynDns.Rest.Powershell.Response;
 
-    [Cmdlet(VerbsCommon.Add, "DynDnsEntry")]
-    public class AddDynDnsEntryCmdLet : DynDnsPsCmdLet
+    [Cmdlet(VerbsCommon.Set, "DynDnsEntry")]
+    public class SetDynDnsEntryCmdLet : DynDnsPsCmdLet
     {
         [Parameter(Mandatory = true, HelpMessage = "The zone for the DNS entry")]
         public string Zone { get; set; }
@@ -36,7 +36,7 @@
                 return null;
             }
 
-            return RecordType == RecordType.CName ? ApiClient.CreateCName(Node, Zone, RData, TimeToLive) : ApiClient.CreateARecord(Node, Zone, RData, TimeToLive);
+            return RecordType == RecordType.CName ? ApiClient.UpdateCName(Node, Zone, RData, TimeToLive) : ApiClient.UpdateARecord(Node, Zone, RData, TimeToLive);
         }
     }
 }

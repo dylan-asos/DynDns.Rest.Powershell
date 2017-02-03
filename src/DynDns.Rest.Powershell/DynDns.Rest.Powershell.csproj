@@ -79,6 +79,7 @@
     <Compile Include="Response\ResponseData\PublishZoneData.cs" />
     <Compile Include="Response\ResponseData\SessionData.cs" />
     <Compile Include="Response\ResponseData\ZoneChangesData.cs" />
+    <Compile Include="SetDynDnsEntryCmdLet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DynDns.Rest.Powershell.nuspec" />

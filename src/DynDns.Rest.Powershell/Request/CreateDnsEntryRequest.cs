@@ -18,5 +18,8 @@ namespace DynDns.Rest.Powershell.Request
 
         [JsonProperty("rdata")]
         public dynamic RData { get; set; }
+
+        [JsonProperty("ttl")]
+        public string TimeToLive { get; set; }
     }
 }

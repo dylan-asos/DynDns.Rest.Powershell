@@ -1,7 +1,5 @@
 ﻿namespace DynDns.Rest.Powershell.Rest
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -16,6 +14,9 @@
     public class DynDnsApi
     {
         private readonly DynDnsApiClient client;
+
+        private const string CNameRecordType = "CNAMERecord";
+        private const string ARecordType = "ARecord";
 
         public DynDnsApi()
         {
@@ -62,26 +63,35 @@
             return response;
         }
 
-        public DynDnsApiCallResponse CreateCName(string node, string zone, string data)
+        public DynDnsApiCallResponse CreateCName(string node, string zone, string data, int ttl)
+        {
+            return UpdateDnsEntry(HttpMethod.Post, CNameRecordType, node, zone, data, ttl);
+        }
+
+        public DynDnsApiCallResponse UpdateCName(string node, string zone, string data, int ttl)
+        {
+            return UpdateDnsEntry(HttpMethod.Put, CNameRecordType, node, zone, data, ttl);
+        }
+
+        private DynDnsApiCallResponse UpdateDnsEntry(HttpMethod method, string recordType, string node, string zone, string data, int ttl)
         {
             var fqdn = GetFullyQualifiedEntry(node, zone);
 
-            var request = DynRequestMessage(HttpMethod.Post, string.Format("REST/CNAMERecord/{0}/{1}/", zone, fqdn));
+            var request = DynRequestMessage(method, string.Format("REST/{0}/{1}/{2}/", recordType, zone, fqdn));
 
-            request.Content = new CreateDnsEntryRequest(new { cname = data }).ToStringContent();
+            request.Content = new CreateDnsEntryRequest(new { cname = data }) { TimeToLive = ttl > 0 ? ttl.ToString() : "0" }.ToStringContent();
 
             return ExecuteDynDnsRequest(request);
         }
 
-        public DynDnsApiCallResponse CreateARecord(string node, string zone, string data)
+        public DynDnsApiCallResponse CreateARecord(string node, string zone, string data, int ttl)
         {
-            var fqdn = GetFullyQualifiedEntry(node, zone);
+            return UpdateDnsEntry(HttpMethod.Post, ARecordType, node, zone, data, ttl);
+        }
 
-            var request = DynRequestMessage(HttpMethod.Post, string.Format("REST/ARecord/{0}/{1}/", zone, fqdn));
-
-            request.Content = new CreateDnsEntryRequest(new { address = data }).ToStringContent();
-
-            return ExecuteDynDnsRequest(request);
+        public DynDnsApiCallResponse UpdateARecord(string node, string zone, string data, int ttl)
+        {
+            return UpdateDnsEntry(HttpMethod.Put, ARecordType, node, zone, data, ttl);
         }
 
         public bool DoesEntryAlreadyExist(string node, string zone)
